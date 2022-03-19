@@ -8,7 +8,8 @@ class Database:
         
         
     def insert_into(self, collection: str, columns: tuple, values: tuple):
-        new_object = {}
+        last_id = self.data[collection][-1]['id'] if len(self.data[collection]) > 0 else 0
+        new_object = {'id' : last_id+1}
         for column in columns:
             new_object[column] = values[columns.index(column)]
         self.data[collection].append(new_object)
@@ -19,6 +20,7 @@ class Database:
             if object[column] == value:
                 return object
         return None
+    
     
     def delete(self, collection: str, column: str, value: str):
         for object in self.data[collection]:
@@ -40,4 +42,3 @@ class Database:
 # print(db.select_from("Users", "username", "eo"))
 # db.delete("Users", "username", "eo")
 # print(db.select_from("Users", "username", "eo"))
-# db.commit()
