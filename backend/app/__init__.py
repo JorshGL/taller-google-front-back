@@ -5,4 +5,11 @@ def create_app():
     app = Flask(__name__)
     CORS(app) 
     
+    app.config.from_mapping(
+        SECRET_KEY = "mySecretKey"
+    )
+    
+    from . import auth
+    app.register_blueprint(auth.bp)
+    
     return app
