@@ -34,11 +34,14 @@ def register():
 def login():
     data = request.get_json()
     
-    if not "password" in data or not "email" in data:
+    try:
+        email = data['email']
+        password = data['password']
+    except KeyError:
         return abort(418)
-  
-    email = data['email']
-    password = data['password']
+    
+    if not password or not email:
+        return abort(418)
     
     user = db.select_from('Users', 'email', email)
     
