@@ -1,0 +1,33 @@
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "email": "ksadasd",
+    "username":"ksjadkjsdkasd"
+}
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "email": "ksadasd",
+    "username":"ksjadkjsdkasd", 
+    "password":""
+}
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "email": "ksadasd",
+    "username":"ksjadkjsdkasd", 
+    "password":"1234"
+}
+
+###
+
+GET http://localhost:5000/auth/get_user/1

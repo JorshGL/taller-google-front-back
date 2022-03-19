@@ -12,4 +12,8 @@ def create_app():
     from . import auth
     app.register_blueprint(auth.bp)
     
+    @app.route('/')
+    def root():
+        return "<p>rawrxd hehe</p>"
+    
     return app
