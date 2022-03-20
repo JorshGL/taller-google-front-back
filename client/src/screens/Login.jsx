@@ -1,5 +1,4 @@
-import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from "../context/AuthProvider";
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import Bienvenida from '../Assets/LOGOTIPO.png';
 import axios from '../api/Axios';
@@ -7,7 +6,6 @@ const LOGIN_URL = '/login';
 
 const Login = () => {
 
-    // const { setAuth } = useContext(AuthContext);
     const emailRef = useRef();
     const errRef = useRef();
 
@@ -35,9 +33,6 @@ const Login = () => {
             }
             );
             console.log(JSON.stringify(response?.data));
-            // const accessToken = response?.data?.accessToken;
-            // const roles = response?.data?.roles;
-            // setAuth({ email, pwd, roles, accessToken });
             setEmail('');
             setPwd('');
             setSuccess(true);    
@@ -58,7 +53,7 @@ const Login = () => {
         <>
             {success ? (
                 <section>
-                    <h1>Estamos adentro jej</h1>
+                    <h1>the pythonist are gay</h1>
                 </section>
             ) : (
             <section className='bg-segundo p-8'>
