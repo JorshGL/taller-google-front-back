@@ -31,11 +31,10 @@ def register():
     
     
 @bp.route('/login', methods=['POST'])
-@cross_origin
+@cross_origin()
 def login():
-    data = request.get_json()
-    
     try:
+        data = request.get_json()
         email = data['email']
         password = data['pwd']
     except KeyError:
