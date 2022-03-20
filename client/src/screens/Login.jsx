@@ -7,7 +7,7 @@ const LOGIN_URL = '/login';
 
 const Login = () => {
 
-    const { setAuth } = useContext(AuthContext);
+    // const { setAuth } = useContext(AuthContext);
     const emailRef = useRef();
     const errRef = useRef();
 
@@ -35,21 +35,19 @@ const Login = () => {
             }
             );
             console.log(JSON.stringify(response?.data));
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({ email, pwd, roles, accessToken });
+            // const accessToken = response?.data?.accessToken;
+            // const roles = response?.data?.roles;
+            // setAuth({ email, pwd, roles, accessToken });
             setEmail('');
             setPwd('');
             setSuccess(true);    
         } catch (err) {
             if (!err?.response) {
-                setErrMsg('noresponde el serbidor');
-            } else if (err.response?.status === 406) {
-                setErrMsg('Usuario o contraseña incorrecto');
-            } else if (err.response?.status === 401) {
-                setErrMsg('inautorisado mijo');
+                setErrMsg('El servidor no responde');
+            } else if (err.response?.status === 418) {
+                setErrMsg("Entrada fallida")
             } else {
-                setErrMsg('Entrada fayida');
+                setErrMsg('¡Ha ocurrido un error con el servidor!');
             }
             errRef.current.focus();
         }
@@ -60,10 +58,7 @@ const Login = () => {
         <>
             {success ? (
                 <section>
-                    <h1>Funcionaaaaaa</h1>
-                    <p>
-                        <a href="/">Entrar a la app</a>
-                    </p>
+                    <h1>Estamos adentro jej</h1>
                 </section>
             ) : (
             <section className='bg-segundo p-8'>
@@ -89,7 +84,6 @@ const Login = () => {
                     required
                     />
                     <button className='p-2 bg-quinto text-segundo rounded-md'>Entrar</button>
-                    <Link to="/" className='text-center text-sm text-quinto py-2 border-b border-quinto'>¿Olvidaste tu contraseña?</Link>
                     <Link to="/register" className='p-2 bg-green text-segundo rounded-md font-semibold mt-6 text-center'>Crea una cuenta</Link>
                     </form>
                 </div>
