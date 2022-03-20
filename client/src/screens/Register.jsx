@@ -177,8 +177,7 @@ const Register = () => {
               <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
                 <FontAwesomeIcon icon={faInfoCircle} />
                 De 8 a 24 caracteres.<br/>
-                Debes incluir letras mayúsculas y minúsculas, un número y un carácter especial.<br />
-                Caracteres especiales permitidos: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
+                Debes incluir letras mayúsculas, minúsculas y un número.
               </p>
               <label htmlFor="confirm_pwd" className='mb-2 text-quinto rounded-md'>
                 Confirmar contraseña:
