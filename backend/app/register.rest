@@ -31,3 +31,13 @@ Content-Type: application/json
 ###
 
 GET http://localhost:5000/auth/get_user/1
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email":"cristovive@email.pe",
+    "pwd":"Cristo1234"
+}
