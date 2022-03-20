@@ -31,14 +31,3 @@ class Database:
     def commit(self):
         file = open("database.txt", "w")
         file.write(self.data.__str__())
-        
-
-    
-# db = Database()
-# db.new_collection("Users")
-# db.insert_into("Users", ("username", "password"), ("Yorch", "1234"))
-# db.insert_into("Users", ("username", "password"), ("eo", "5678"))
-
-# print(db.select_from("Users", "username", "eo"))
-# db.delete("Users", "username", "eo")
-# print(db.select_from("Users", "username", "eo"))
