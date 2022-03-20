@@ -84,7 +84,6 @@ const Login = () => {
                     required
                     />
                     <button className='p-2 bg-quinto text-segundo rounded-md'>Entrar</button>
-                    <Link to="/" className='text-center text-sm text-quinto py-2 border-b border-quinto'>¿Olvidaste tu contraseña?</Link>
                     <Link to="/register" className='p-2 bg-green text-segundo rounded-md font-semibold mt-6 text-center'>Crea una cuenta</Link>
                     </form>
                 </div>

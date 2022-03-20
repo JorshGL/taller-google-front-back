@@ -204,7 +204,7 @@ const Register = () => {
             </form>
             <div className='flex flex-col mt-5 pt-3 border-t border-quinto'>
                 <p className='mb-3 text-quinto text-center'>¿Ya te encuentras registrado?</p>
-                <a href="/http://localhost:3000/" className='p-2 bg-transparent border border-quinto text-quinto rounded-md font-semibold mx-7 text-center'>Volver</a>
+                <a href="/" className='p-2 bg-transparent border border-quinto text-quinto rounded-md font-semibold mx-7 text-center'>Volver</a>
             </div>
           </div>
         </section>
