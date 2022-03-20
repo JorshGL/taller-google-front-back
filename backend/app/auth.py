@@ -37,7 +37,7 @@ def login():
     
     try:
         email = data['email']
-        password = data['password']
+        password = data['pwd']
     except KeyError:
         return abort(418)
     

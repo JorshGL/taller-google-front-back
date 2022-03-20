@@ -24,8 +24,8 @@ Content-Type: application/json
 
 {
     "email": "ksadasd",
-    "username":"ksjadkjsdkasd", 
-    "password":"1234"
+    "user":"ksjadkjsdkasd", 
+    "pwd":"1234"
 }
 
 ###
