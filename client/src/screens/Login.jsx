@@ -58,7 +58,10 @@ const Login = () => {
         <>
             {success ? (
                 <section>
-                    <h1>Estamos adentro jej</h1>
+                    <h1>Funcionaaaaaa</h1>
+                    <p>
+                        <a href="/">Entrar a la app</a>
+                    </p>
                 </section>
             ) : (
             <section className='bg-segundo p-8'>
