@@ -9,7 +9,6 @@ def create_app():
         SECRET_KEY = "mySecretKey"
     )
     
-    app.config['CORS_HEADERS'] = 'Content Type'
     
     from . import auth
     app.register_blueprint(auth.bp)
