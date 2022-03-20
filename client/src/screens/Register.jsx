@@ -84,7 +84,7 @@ const Register = () => {
     } catch (err) {
       if (!err?.response) {
         setErrorMsg('El servidor no responde');
-      } else if (err.response?.status === 409){
+      } else if (err.response?.status === 418){
         setErrorMsg('El usuario ya existe');
       } else {
         setErrorMsg('Falló el registro')
