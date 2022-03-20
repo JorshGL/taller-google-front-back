@@ -43,11 +43,13 @@ const Login = () => {
             setSuccess(true);    
         } catch (err) {
             if (!err?.response) {
-                setErrMsg('El servidor no responde');
-            } else if (err.response?.status === 418) {
-                setErrMsg("Entrada fallida")
+                setErrMsg('noresponde el serbidor');
+            } else if (err.response?.status === 406) {
+                setErrMsg('Usuario o contraseña incorrecto');
+            } else if (err.response?.status === 401) {
+                setErrMsg('inautorisado mijo');
             } else {
-                setErrMsg('¡Ha ocurrido un error con el servidor!');
+                setErrMsg('Entrada fayida');
             }
             errRef.current.focus();
         }
@@ -87,6 +89,7 @@ const Login = () => {
                     required
                     />
                     <button className='p-2 bg-quinto text-segundo rounded-md'>Entrar</button>
+                    <Link to="/" className='text-center text-sm text-quinto py-2 border-b border-quinto'>¿Olvidaste tu contraseña?</Link>
                     <Link to="/register" className='p-2 bg-green text-segundo rounded-md font-semibold mt-6 text-center'>Crea una cuenta</Link>
                     </form>
                 </div>
