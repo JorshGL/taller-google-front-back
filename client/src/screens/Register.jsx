@@ -19,7 +19,7 @@ import TopBytes from '../Assets/LOGOTIPO.png'
 //EXPRESIONES REGULARES: Nos permitirán agregar restricciones a los input.
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const EMAIL_REGEX=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]{2,30}[.][a-zA-Z]{2,4}$/;
+const EMAIL_REGEX= /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]{2,30}[.][a-zA-Z]{2,4}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
 
 //URL DESDE EL CUAL SE ENVIARÁ LA PETICIÓN.
