@@ -1,20 +1,43 @@
+//! ******************** IMPORTACIONES ********************//
+
+// IMPORTACIONES PARA DESARROLLAR LA PARTE FUNCIONAL DEL REGISTER
+
 import {useRef, useState, useEffect, React} from 'react'
 import axios from "../api/Axios"
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./register.css";
-import TopBytes from '../Assets/LOGOTIPO.png';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+
+// IMPORTACIONES PARA LA ESTÉTICA
+
+import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import "./register.css"
+import TopBytes from '../Assets/LOGOTIPO.png'
+
+
+//! ******************** DESARROLLO DEL REGISTER ********************//
+
+//EXPRESIONES REGULARES: Nos permitirán agregar restricciones a los input.
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const EMAIL_REGEX=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]{2,30}[.][a-zA-Z]{2,4}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
+
+//URL DESDE EL CUAL SE ENVIARÁ LA PETICIÓN.
+
 const REGISTER_URL = "http://localhost:5000/auth/register";
+
+//! COMPONENTE FUNCIONAL
 
 const Register = () => {
 
+  //* HOOKS
+
+  // HOOKS USEREF():
+
   const userRef = useRef();
   const errorRef = useRef();
+
+  // HOOKS USESTATE():
 
   const [user, setUser] = useState('');
   const [validName, setValidName] = useState(false);
@@ -34,6 +57,8 @@ const Register = () => {
 
   const [errorMsg, setErrorMsg] = useState('');
   const [success, setSuccess] = useState(false);
+
+  // HOOKS USEEFFECT():
 
   useEffect(() => {
     userRef.current.focus();
@@ -56,19 +81,35 @@ const Register = () => {
     setErrorMsg('');
   }, [user, email, pwd, matchPwd])
 
-  const handleSubmit = async (e) => {
+
+  //! CONEXIÓN AL BACKEND
+
+  //FUNCIÓN FLECHA ASYNC
+
+  const enviarRegister = async (e) => {
+
     e.preventDefault();
+
+    //TESTEAMOS LAS EXPRESIONES REGULARES RECOLECTANDO LOS DATOS QUE SE ESTÁN ESCRIBIENDO
+
     const v1 = USER_REGEX.test(user);
     const v2 = EMAIL_REGEX.test(email);
     const v3 = PWD_REGEX.test(pwd);
+
+    //EN BASE AL TEST ANTERIOR, RETORNAMOS ALGÚN MENSAJE O NO
     
     if ( !v1 || !v2 || !v3 ) {
       setErrorMsg("Entrada invalida");
       return;
     }
 
+    //* TRY CATCH PARA ENVIAR LA INFORMACIÓN AL BACKEND
+
     try {
-      const response = await axios.post(REGISTER_URL, 
+
+      // CREAMOS LA PETICION
+
+      const peticion = await axios.post(REGISTER_URL, 
         JSON.stringify({ user, email, pwd, matchPwd }),
         {
           headers: { authorization : '*', 
@@ -76,28 +117,42 @@ const Register = () => {
           withCredentials: false
         }
       );
-      console.log(JSON.stringify(response?.data));
+      console.log(JSON.stringify(peticion?.data));
+
+      // ACTUALIZAMOS LOS HOOKS
+
       setSuccess(true);
       setUser('');
       setEmail('');
       setPwd('');
       setMatchPwd('');
+
     } catch (err) {
-      if (!err?.response) {
+
+      // ASIGNAMOS LOS MENSAJES EN LOS HOOKS DE ACUERDO A LOS CÓDIGOS QUE NOS DEVUELVA LA API
+
+      if (!err?.peticion) {
         setErrorMsg('El servidor no responde');
-      } else if (err.response?.status === 418){
+      } else if (err.peticion?.status === 418){
         setErrorMsg('El usuario ya existe');
       } else {
         setErrorMsg('Falló el registro')
       }
+
+      // ACTUALIZAMOS EL HOOK
 
       errorRef.current.focus();
 
     }
   }
 
+  //! LO QUE SE MOTRARÁ EN PANTALLA
+
   return (
     <>
+
+      {/* CREAMOS UNA CONDICION DE ACUERDO A LOS HOOKS DEFINIDOS ANTERIORMENTE */}
+
       {success ? (
 
         <section className='p-8'>
@@ -111,13 +166,19 @@ const Register = () => {
 
           <section className='px-6'>
             <div className='p-7 flex flex-col rounded-xl flex flex-col md:shadow-lg rounded-xl'>
+
+              {/* CREAMOS UN TEXTO QUE ME MUESTRE EL MENSAJE DE ERROR */}
               
               <p ref={errorRef} className={errorMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errorMsg}</p>
               
               <h1 className='text-sky-500 text-4xl text-center m-10 font-bold m-0'>¡Registrate!</h1>
               <p className='text-center text-sky-500 py-2 border-b border-sky-500'>¡Es fácil y sencillo!</p>
+
+              {/* CREAMOS EL FORMULARIO ASIGNANDOLE LA FUNCIÓN DE CONEXIÓN CUANDO SE ENVÍE */}
               
-              <form onSubmit={handleSubmit} className='flex flex-col'>
+              <form onSubmit={enviarRegister} className='flex flex-col'>
+
+                {/* CREAMOS LA LÓGICA PARA DECIRLE AL USUARIO SI ESTÁ BIEN O MAL */}
                 
                 <label htmlFor="username" className='mt-8 mb-2 text-sky-500 rounded-xl'>
 
@@ -129,8 +190,10 @@ const Register = () => {
 
                 <input 
                   
-                  className='mb-3 text-sky-500 p-3 rounded-xl' type="text" id="username" required autoComplete="off" aria-describedby="uidnote" value={user} 
+                  className='mb-2 text-sky-500 p-3 rounded-xl border border-sky-500' type="text" id="username" required autoComplete="off" aria-describedby="uidnote" value={user} 
                   
+                  // ASIGNAMOS LA LÓGICA AL CAMPO DE TEXTO
+
                   ref={userRef} 
                   onChange={(e) => setUser(e.target.value)} 
                   aria-invalid={validName ? "false" : "true"} 
@@ -138,6 +201,8 @@ const Register = () => {
                   onBlur={() => setUserFocus(false)}
                 
                 />
+
+                {/* CREAMOS LA NOTA DE INSTRUCCIONES */}
 
                 <p id="uidnote" 
                   
@@ -149,6 +214,8 @@ const Register = () => {
 
                 </p>
 
+                {/* CREAMOS LA LÓGICA PARA DECIRLE AL USUARIO SI ESTÁ BIEN O MAL */}
+
                 <label htmlFor="email" className='mb-2 text-sky-500 rounded-xl'>
 
                   Email:
@@ -159,14 +226,18 @@ const Register = () => {
 
                 <input
 
-                  type="email" id="email" required autoComplete="off" aria-describedby="emailnote" className='mb-3 text-sky-500 p-3 rounded-xl' value={email}
+                  type="email" id="email" required autoComplete="off" aria-describedby="emailnote" className='mb-2 text-sky-500 p-3 rounded-xl border border-sky-500' value={email}
                   
+                  // ASIGNAMOS LA LÓGICA AL CAMPO DE TEXTO
+
                   onChange={(e) => setEmail(e.target.value)}
                   aria-invalid={validEmail ? "false" : "true"}
                   onFocus={() => setEmailFocus(true)}
                   onBlur={() => setEmailFocus(false)}
                   
                 />
+
+                {/* CREAMOS LA NOTA DE INSTRUCCIONES */}
 
                 <p id="uidnote" 
                 
@@ -175,6 +246,8 @@ const Register = () => {
                   Prueba con un email real.
 
                 </p>
+
+                {/* CREAMOS LA LÓGICA PARA DECIRLE AL USUARIO SI ESTÁ BIEN O MAL */}
 
                 <label htmlFor="password" className='mb-2 text-sky-500 rounded-xl'>
 
@@ -186,14 +259,18 @@ const Register = () => {
 
                 <input
 
-                  type="password" id="password" required aria-describedby="pwdnote" className='mb-3 text-sky-500 p-3 rounded-xl' value={pwd}
+                  type="password" id="password" required aria-describedby="pwdnote" className='mb-2 text-sky-500 p-3 rounded-xl border border-sky-500' value={pwd}
                   
+                  // ASIGNAMOS LA LÓGICA AL CAMPO DE TEXTO
+
                   onChange={(e) => setPwd(e.target.value)}
                   aria-invalid={validPwd ? "false" : "true"}
                   onFocus={() => setPwdFocus(true)}
                   onBlur={() => setPwdFocus(false)}
                   
                 />
+
+                {/* CREAMOS LA NOTA DE INSTRUCCIONES */}
 
                 <p id="pwdnote" 
                 
@@ -203,6 +280,8 @@ const Register = () => {
                   Debes incluir letras mayúsculas, minúsculas y un número.
 
                 </p>
+
+                {/* CREAMOS LA LÓGICA PARA DECIRLE AL USUARIO SI ESTÁ BIEN O MAL */}
 
                 <label htmlFor="confirm_pwd" className='mb-2 text-sky-500 rounded-xl'>
 
@@ -214,14 +293,18 @@ const Register = () => {
 
                 <input
 
-                  type="password" id="confirm_pwd" required aria-describedby="confirmnote" className='mb-3 text-sky-500 p-3 rounded-xl' value={matchPwd}
+                  type="password" id="confirm_pwd" required aria-describedby="confirmnote" className='mb-4 text-sky-500 p-3 rounded-xl border border-sky-500' value={matchPwd}
                   
+                  // ASIGNAMOS LA LÓGICA AL CAMPO DE TEXTO
+
                   onChange={(e) => setMatchPwd(e.target.value)}
                   aria-invalid={validMatch ? "false" : "true"}
                   onFocus={() => setMatchFocus(true)}
                   onBlur={() => setMatchFocus(false)}
 
                 />
+
+                {/* CREAMOS LA NOTA DE INSTRUCCIONES */}
 
                 <p id="confirmnote" 
                 
@@ -230,6 +313,8 @@ const Register = () => {
                   Debe coincidir con la primera contraseña.
 
                 </p>
+
+                {/* CREAMOS LA LÓGICA PARA EL BOTÓN DE ENVÍO */}
 
                 <button disabled={!validName || !validPwd || !validMatch ? true : false} className='p-3 bg-green-500 text-white rounded-xl font-semibold'>Registrarse</button>
               
