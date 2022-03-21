@@ -53,7 +53,7 @@ const Login = () => {
         <>
             {success ? (
                 <section>
-                    <h1>the pythonist are gay</h1>
+                    <h1>Adentro!!!</h1>
                 </section>
             ) : (
             <section className='bg-segundo p-8'>
