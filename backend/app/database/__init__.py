@@ -8,6 +8,7 @@ class Database:
         
         
     def insert_into(self, collection: str, columns: tuple, values: tuple):
+        self.data[collection].sort(key=lambda user: user['id'])
         last_id = self.data[collection][-1]['id'] if len(self.data[collection]) > 0 else 0
         new_object = {'id' : last_id+1}
         for column in columns:
